@@ -48,11 +48,11 @@ receive, return, and cancel projector loans.
 | Rule | Description |
 | --- | --- |
 | BR1 | A borrowing period must be between 1 and 7 calendar days. |
-| BR2 | Only an available projector can be issued. |
+| BR2 | A projector may change from AVAILABLE to BORROWED only once; an invalid state transition is rejected. |
 | BR3 | A borrower can have at most two pending or active loans. |
 | BR4 | A student cannot borrow a premium projector. |
-| BR5 | Issuing and returning loans records the appropriate domain event. |
-| BR6 | A stale projector update is rejected using optimistic concurrency. |
+| BR5 | After a loan is issued, `LoanIssued` requests that the projector aggregate mark itself borrowed. |
+| BR6 | A loan request can continue only after its borrower and projector are found through their repositories. |
 
 Valid loan status transitions are:
 
@@ -140,6 +140,33 @@ Run all tests with branch coverage:
 ```bash
 python -m pytest --cov
 ```
+
+Run the eight coursework acceptance tests:
+
+```bash
+env -u PYTHONPATH uv run pytest -q tests/test_coursework_requirements.py
+```
+
+The `PYTHONPATH` removal prevents globally installed ROS pytest plugins from
+polluting this project's isolated test run on machines where ROS is installed.
+
+## Coursework Submission Files
+
+- `coursework_slides.pptx`: the required 15-slide presentation (replace the
+  five member placeholders on Slide 1 before submission).
+- `tests/test_coursework_requirements.py`: exactly T1-T8 mapped to BR1-BR6,
+  the successful event flow, and Aggregate B rejection.
+- `evidence/test_run.txt`: actual complete test and coverage output.
+- `evidence/tdd_cycle.txt`: actual red/green output for the selected TDD case.
+
+The factory pattern was intentionally omitted because aggregate construction is
+simple and its rules already belong in constructors and aggregate methods.
+Layer Supertype was also omitted because the domain objects have no meaningful
+shared state or behaviour; a common base class would add coupling without value.
+
+AI use disclosure: OpenAI Codex helped review the coursework traceability,
+separate the domain-event handler, prepare tests, and draft presentation text;
+the group remains responsible for explaining and validating every decision.
 
 ## Development Roadmap
 

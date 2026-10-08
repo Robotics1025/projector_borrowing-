@@ -7,6 +7,7 @@ from .dto import (
     ReturnLoanCommand,
 )
 from .issue_loan import IssueLoan
+from .loan_issued_handler import LoanIssuedHandler
 from .request_loan import RequestLoan
 from .return_loan import ReturnLoan
 
@@ -16,6 +17,7 @@ __all__ = [
     "IssueLoan",
     "IssueLoanCommand",
     "LoanResult",
+    "LoanIssuedHandler",
     "RequestLoan",
     "RequestLoanCommand",
     "ReturnLoan",

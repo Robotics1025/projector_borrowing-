@@ -2,6 +2,7 @@ from ...domain.borrowing import BorrowerRepository, BorrowingEligibilityService
 from ...domain.projectors import ProjectorRepository
 from ._loaders import load_borrower, load_projector
 from .dto import IssueLoanCommand, LoanResult
+from .loan_issued_handler import LoanIssuedHandler
 
 
 class IssueLoan:
@@ -12,6 +13,7 @@ class IssueLoan:
     ) -> None:
         self._borrower_repository = borrower_repository
         self._projector_repository = projector_repository
+        self._loan_issued_handler = LoanIssuedHandler(projector_repository)
 
     def execute(self, command: IssueLoanCommand) -> LoanResult:
         borrower = load_borrower(
@@ -29,13 +31,9 @@ class IssueLoan:
             enforce_loan_limit=False,
         )
 
-        expected_projector_version = projector.version
         borrower.issue_loan(loan.id)
-        projector.mark_borrowed()
-        self._projector_repository.save(
-            projector,
-            expected_version=expected_projector_version,
-        )
+        for event in borrower.pull_events():
+            self._loan_issued_handler.handle(event)
         self._borrower_repository.save(borrower)
 
         return LoanResult.from_loan(loan)
