@@ -1,0 +1,38 @@
+TDD RED — upper boundary check temporarily set to 6 days
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_t1_br1_accepts_seven_day_boundary_and_rejects_eight_days _________
+
+    def test_t1_br1_accepts_seven_day_boundary_and_rejects_eight_days() -> None:
+        start = date(2026, 10, 8)
+>       assert BorrowingPeriod(start, start + timedelta(days=7)).duration_in_days() == 7
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_coursework_requirements.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<string>:5: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = BorrowingPeriod(start_date=datetime.date(2026, 10, 8), due_date=datetime.date(2026, 10, 15))
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.start_date, date):
+            raise TypeError("start_date must be a date")
+        if not isinstance(self.due_date, date):
+            raise TypeError("due_date must be a date")
+        if not 1 <= self.duration_in_days() <= 6:
+>           raise InvalidBorrowingPeriodError(
+                "borrowing duration must be between 1 and 7 calendar days"
+            )
+E           projector_borrowing.domain.borrowing.exceptions.borrowing_errors.InvalidBorrowingPeriodError: borrowing duration must be between 1 and 7 calendar days
+
+src/projector_borrowing/domain/borrowing/valueobject/borrowing_period.py:18: InvalidBorrowingPeriodError
+=========================== short test summary info ============================
+FAILED tests/test_coursework_requirements.py::test_t1_br1_accepts_seven_day_boundary_and_rejects_eight_days
+1 failed in 0.03s
+
+IMPLEMENTATION — restored inclusive upper bound: 1 <= duration <= 7
+TDD GREEN
+.                                                                        [100%]
+1 passed in 0.02s

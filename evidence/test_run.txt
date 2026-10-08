@@ -1,0 +1,85 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/robotics1025/Documents/project/projector_borrowing-
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.1.0
+collected 85 items
+
+tests/application/test_cancel_loan.py .                                  [  1%]
+tests/application/test_issue_loan.py ..                                  [  3%]
+tests/application/test_request_loan.py ...                               [  7%]
+tests/application/test_return_loan.py .                                  [  8%]
+tests/integration/test_borrower_repository.py ...                        [ 11%]
+tests/integration/test_loan_workflow.py .                                [ 12%]
+tests/integration/test_projector_repository.py .......                   [ 21%]
+tests/test_architecture.py ....                                          [ 25%]
+tests/test_cli.py ..                                                     [ 28%]
+tests/test_coursework_requirements.py ........                           [ 37%]
+tests/unit/domain/borrowing/test_borrower.py .............               [ 52%]
+tests/unit/domain/borrowing/test_borrowing_eligibility.py ......         [ 60%]
+tests/unit/domain/borrowing/test_borrowing_period.py ......              [ 67%]
+tests/unit/domain/borrowing/test_loan.py ..........                      [ 78%]
+tests/unit/domain/projectors/test_projector.py ............              [ 92%]
+tests/unit/domain/test_business_rules.py ......                          [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.14.5-final-0 ________________
+
+Name                                                                                    Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------------------------------------------------------------
+src/projector_borrowing/__init__.py                                                         0      0      0      0   100%
+src/projector_borrowing/__main__.py                                                        24      0      2      0   100%
+src/projector_borrowing/application/__init__.py                                             3      0      0      0   100%
+src/projector_borrowing/application/borrowing/__init__.py                                   7      0      0      0   100%
+src/projector_borrowing/application/borrowing/_loaders.py                                  14      0      4      0   100%
+src/projector_borrowing/application/borrowing/cancel_loan.py                               12      0      0      0   100%
+src/projector_borrowing/application/borrowing/dto.py                                       17      0      0      0   100%
+src/projector_borrowing/application/borrowing/issue_loan.py                                20      0      2      0   100%
+src/projector_borrowing/application/borrowing/loan_issued_handler.py                       11      0      0      0   100%
+src/projector_borrowing/application/borrowing/request_loan.py                              16      0      0      0   100%
+src/projector_borrowing/application/borrowing/return_loan.py                               18      0      0      0   100%
+src/projector_borrowing/application/exceptions.py                                          12      0      0      0   100%
+src/projector_borrowing/domain/__init__.py                                                  4      0      0      0   100%
+src/projector_borrowing/domain/borrowing/__init__.py                                        9      0      0      0   100%
+src/projector_borrowing/domain/borrowing/borrower.py                                       85      0     24      0   100%
+src/projector_borrowing/domain/borrowing/entity/__init__.py                                 2      0      0      0   100%
+src/projector_borrowing/domain/borrowing/entity/loan.py                                    50      0     16      0   100%
+src/projector_borrowing/domain/borrowing/enums/__init__.py                                  3      0      0      0   100%
+src/projector_borrowing/domain/borrowing/enums/borrower_role.py                             4      0      0      0   100%
+src/projector_borrowing/domain/borrowing/enums/loan_status.py                               6      0      0      0   100%
+src/projector_borrowing/domain/borrowing/events/__init__.py                                 4      0      0      0   100%
+src/projector_borrowing/domain/borrowing/events/loan_issued.py                              6      0      0      0   100%
+src/projector_borrowing/domain/borrowing/events/loan_returned.py                            6      0      0      0   100%
+src/projector_borrowing/domain/borrowing/exceptions/__init__.py                             2      0      0      0   100%
+src/projector_borrowing/domain/borrowing/exceptions/borrowing_errors.py                    18      0      0      0   100%
+src/projector_borrowing/domain/borrowing/repositories/__init__.py                           2      0      0      0   100%
+src/projector_borrowing/domain/borrowing/repositories/borrower_repository.py                5      0      0      0   100%
+src/projector_borrowing/domain/borrowing/services/__init__.py                               2      0      0      0   100%
+src/projector_borrowing/domain/borrowing/services/borrowing_eligibility_service.py         17      0     10      0   100%
+src/projector_borrowing/domain/borrowing/valueobject/__init__.py                            2      0      0      0   100%
+src/projector_borrowing/domain/borrowing/valueobject/borrowing_period.py                   14      0      6      0   100%
+src/projector_borrowing/domain/projectors/__init__.py                                       5      0      0      0   100%
+src/projector_borrowing/domain/projectors/enums/__init__.py                                 3      0      0      0   100%
+src/projector_borrowing/domain/projectors/enums/projector_status.py                         5      0      0      0   100%
+src/projector_borrowing/domain/projectors/enums/projector_type.py                           4      0      0      0   100%
+src/projector_borrowing/domain/projectors/events/__init__.py                                0      0      0      0   100%
+src/projector_borrowing/domain/projectors/exceptions/__init__.py                            2      0      0      0   100%
+src/projector_borrowing/domain/projectors/exceptions/projector_errors.py                    6      0      0      0   100%
+src/projector_borrowing/domain/projectors/projector.py                                     62      0     22      0   100%
+src/projector_borrowing/domain/projectors/repositories/__init__.py                          2      0      0      0   100%
+src/projector_borrowing/domain/projectors/repositories/projector_repository.py              5      0      0      0   100%
+src/projector_borrowing/domain/projectors/services/__init__.py                              0      0      0      0   100%
+src/projector_borrowing/domain/projectors/valueobjects/__init__.py                          0      0      0      0   100%
+src/projector_borrowing/domain/shared/__init__.py                                           2      0      0      0   100%
+src/projector_borrowing/domain/shared/domain_event.py                                       4      0      0      0   100%
+src/projector_borrowing/infrastructure/__init__.py                                          2      0      0      0   100%
+src/projector_borrowing/infrastructure/repositories/__init__.py                             3      0      0      0   100%
+src/projector_borrowing/infrastructure/repositories/in_memory_borrower_repository.py       19      0      4      0   100%
+src/projector_borrowing/infrastructure/repositories/in_memory_projector_repository.py      24      0      8      0   100%
+src/projector_borrowing/presentation/__init__.py                                            2      0      0      0   100%
+src/projector_borrowing/presentation/console.py                                             6      0      0      0   100%
+-----------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                     551      0     98      0   100%
+Required test coverage of 100.0% reached. Total coverage: 100.00%
+============================== 85 passed in 0.35s ==============================
