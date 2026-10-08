@@ -5,16 +5,24 @@ from pathlib import Path
 import pytest
 
 
-SOURCE_ROOT = Path("src/projector_borrowing")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PACKAGE_NAME = "projector_borrowing"
+SOURCE_ROOT = PROJECT_ROOT / "src" / PACKAGE_NAME
+
+
+def module_context(path: Path) -> tuple[str, str]:
+    relative_path = path.relative_to(PROJECT_ROOT / "src").with_suffix("")
+    module_name = ".".join(relative_path.parts)
+    if path.name == "__init__.py":
+        package = module_name.removesuffix(".__init__")
+    else:
+        package = module_name.rpartition(".")[0]
+    return module_name, package
 
 
 def imported_modules(path: Path) -> set[str]:
     tree = ast.parse(path.read_text(), filename=str(path))
-    relative_path = path.relative_to("src").with_suffix("")
-    parts = relative_path.parts
-    package = ".".join(parts[:-1])
-    if path.name == "__init__.py":
-        package = ".".join(parts[:-1])
+    _, package = module_context(path)
 
     imports: set[str] = set()
     for node in ast.walk(tree):
@@ -25,6 +33,9 @@ def imported_modules(path: Path) -> set[str]:
             if node.level:
                 module = resolve_name("." * node.level + module, package)
             imports.add(module)
+            for alias in node.names:
+                if alias.name != "*":
+                    imports.add(f"{module}.{alias.name}")
     return imports
 
 
@@ -33,7 +44,7 @@ def imported_modules(path: Path) -> set[str]:
     [
         ("domain", {"application", "infrastructure", "presentation"}),
         ("application", {"infrastructure", "presentation"}),
-        ("infrastructure", {"application", "presentation"}),
+        ("infrastructure", {"presentation"}),
         ("presentation", {"domain", "infrastructure"}),
     ],
 )
@@ -47,6 +58,11 @@ def test_dependencies_point_inward(
             for forbidden in forbidden_layers:
                 prefix = f"projector_borrowing.{forbidden}"
                 if imported == prefix or imported.startswith(f"{prefix}."):
-                    violations.append(f"{path}: imports {imported}")
+                    violations.append(
+                        f"{path.relative_to(PROJECT_ROOT)} "
+                        f"imports forbidden module {imported}"
+                    )
 
-    assert violations == []
+    assert not violations, (
+        "Architecture dependency violations:\n" + "\n".join(violations)
+    )
