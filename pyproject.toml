@@ -1,0 +1,24 @@
+[project]
+name = "projector-borrowing"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+projector-borrowing = "projector_borrowing.__main__:main"
+
+[project.optional-dependencies]
+test = ["coverage>=7.16.2", "pytest>=9.1.1", "pytest-cov>=4.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["projector_borrowing"]
+omit = ["*/borrowing/respository/*"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true

@@ -4,7 +4,9 @@ from .borrowing import (
     BorrowerRole,
     BorrowingEligibilityService,
     BorrowingPeriod,
+    InvalidBorrowingPeriodError,
     Loan,
+    LoanLimitExceededError,
     LoanStatus,
 )
 from .projectors import (
@@ -22,7 +24,9 @@ __all__ = [
     "BorrowingEligibilityService",
     "BorrowingPeriod",
     "DomainEvent",
+    "InvalidBorrowingPeriodError",
     "Loan",
+    "LoanLimitExceededError",
     "LoanStatus",
     "Projector",
     "ProjectorRepository",

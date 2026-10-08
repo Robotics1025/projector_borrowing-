@@ -104,6 +104,9 @@ class Borrower:
         open_statuses = {LoanStatus.PENDING, LoanStatus.ACTIVE}
         return sum(loan.status in open_statuses for loan in self._loans)
 
+    def get_loan(self, loan_id: UUID) -> Loan:
+        return self._find_loan(loan_id)
+
     def pull_events(self) -> list[DomainEvent]:
         events = self._events.copy()
         self._events.clear()
